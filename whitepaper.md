@@ -1,6 +1,6 @@
 ---
-title:  'zkSafeZones - Revolutionizing Civilian Protection in War Zones & Legal Compliance'
-shorttitle: 'zkSafeZones - Blockchain and Zero-Knowledge For Humanitarian Goals'
+title:  'zkSafeZones - Blockchain & Zero-Knowledge for Civilian Protection in War Zones & Automated Legal Compliance'
+shorttitle: 'zkSafeZones - Blockchain and Zero-Knowledge For Humanitarian Goals & Automated Legal Governing Of Techhnology'
 author:
 - name: Illya Gerasymchuk
   email: contact@illya.sh
