@@ -591,6 +591,8 @@ In closing, zkSafeZones stands as a testament to the power of combining advanced
 
 # References and Appendices
 
+Note for the reader: This sections is a work-in-progress (WIP). All of the referrences can be found within the text of the whitepaper, in the form of hyperlinks. The appendices will be added in the future.
+
 ## Documenting the Foundations and Further Reading
 
 To provide a comprehensive understanding and to support further research, this section includes references and appendices related to zkSafeZones and its underlying technologies.
@@ -602,8 +604,8 @@ To provide a comprehensive understanding and to support further research, this s
 
 ### Appendices
 
-TODO
+- Appendices will be added here
 
-# Notes
+# Note For The Reader
 
 This whitepaper is a work-in-progress (WIP). Contributions are welcomed. Contact: contact@zklocus.dev | Homepage: https://zklocus.dev/ | Twitter/X: https://x.com/zkLocus
