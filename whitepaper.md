@@ -521,7 +521,37 @@ architecture will support arbitrary sources of storage proofs, thus allowing for
 
 This functionality will be implemented by enabling the attachment/wrapping of zkLocus proofs with the proof of storage, using a mechanism similar to the attachment of arbitrary metadata. The associated smart contracts will verify those proofs before accepting the merkle tree updates.
 
+# Zones Compression and Database-Free Design
 
+zkSafeZones is designed to operate in extreme environments, where network connectivty and computational resources are scarce. For this reason, it important to minimize the amount of data that is necessary to process and send over network. A part of this is already addressed by the architecture of zkLocus, which enables for infinite compression, by leveraging its architecture based on recursive ZK-SNARKs. However, in the most dynamic implementation of zkSafeZones, it's necessary to communicate the geolocation data associated with each geolcoation proof. At the very minimum, this would be two 64-bit numbers, representing either the coordinates or the polygon. Given the range of all possible values, the requirement for storing this data in a dedicated storage system is necessary.
+
+Based on our research and during the process of integration of zkLocus with third-parties, a design based on storage-free solution, or its compressed form is a strong value-proposition. In the context of confict zones, some of the regions are extremely limited in their network coverage, which makes it either fully inacessebile or extremely slow. Given the importance of submission of geolocation data on chain being as fast as possible, a solution that does not require a dedicated storage system expands its aplicability to the most extreme environments.
+
+Moreover, during our integration of zkLocus with Decentralised.trade (https://decentralised.trade), the need for a limited set of pre-defined geolocation areas was expressed. These areas are specific geographical areas of interest, such as ones deliniating the borders of a specific facilty.
+
+Given the reduced amount of data associatd with these proofs in their current state, and the possiblity for its furhter compression, we do not consider this to be a limitation, neither a practical one, nor a theoretical one. In this section, we will describe the mechanism by which zkSafeZones can operate without the requirement for off-chain storage. 
+
+Despite that, based on the potential application environments that we identified during our research, as well as the practical business needs, in this section, we will devise a solution that enables zkSafeZones and zkLocus geolocation proofs to be used without the need for a dedicated storage system, thus not requiring off-chain storage for geolocation data, and limiting the blockchain storage to just a few bytes.
+
+## Removing The Need For Storage
+
+zkSafeZones can be used to submtion geolocation proofs for arbitrary geolocation areas. However, in several practical applications it is sufficient to to limit the set of possible geolocation areas to a few pre-defined areas. In the case of application of zkSafeZones in conflict zones, these areas of interest bould be the borders of specific facilities, such as hospitals, schools, and other areas with civilian infrastructure. In the case of business applications for decentralized trade, these areas could represent warehouses, or other areas of delivery of goods.
+
+This represents an opportunity for greatly compressing the amount of geolocation data that has to be stored, including reducing the need for storing any data at all. This is achieved by defining a set of geolocation areas, and then assigning an ID to each one of these areas. This ID can be an integer, as small as 1 bit. In this process, the set of possible geolocation areas of zones is reduced to a small number, thus we call this process "Zones Compression".
+
+## Zones Compression in zkSafeZones
+
+It's possible to remove the need for geolocation data storage in zkSafeZones and zkLocus by limiting the set of possible geolocation areas to a few pre-defined areas. Each area is assigned a unique integer value, which is used to identify the area. The geolocation proofs are then submitted with the ID of the area, instead of the actual geolocation data. Once this proof is submitted, the smart contracts updates the merkle root, which now includes an additional leaf, in form of `digital identity: geolocation area ID`. Given that the list of authorized identities is known, and it's possible to identify the identity for whom the proof is being submitted, the `geolocation area ID` can only be a value from a small set of possible values. This makes it possible to brute-force the entire set of possible values, and thus to identify the actual geolocation area. In this way, the need for storing the geolocation data during proof submission is removed, and the blockchain storage is limited to just a few bytes.
+
+For example, if the set of possible geolocation areas to report is limited to 5, then for each geolocation data point, it's only needed to attempt 5 values at most. Such a reduced computation complexity is manageable even in resource-constrained devices.
+
+### Ensuring A Manageable Complexity With A DeFi Business Model
+
+In order to ensure that at any point the amount of data to bruteforce is manageable, it's possible to associate monetary value incentives for the update of the data represented by the merkle tree root on-chain. In practice, this entails allowing any entity to identiy bruteforce the numeric ID of the geolocation data commited to on-chain, and then claim a $ZKL bounty for the update of geolocation data to the data availability layer.
+
+This is akin to how the Proof-of-Work (PoW) mechanism in Bitcoin works, where the miners are incentivised to update the blockchain with the new block, by the reward of the newly minted Bitcoin. In the case of Bitcoin, the bruteorcing operation is used to demonstrate Proof-of-Work, while in zkSafeZones and zkLocus it's used to demonstrate the correctness of updated geolocation. Such an approach enables a fully self-sustainable, and decentralized system, which uses economic incentives and cooperation for its operation.
+
+Such an architectural approach, voids the need for storing the geolocation data off-chain before submitting that data on-chain, while including a fully decentralized and self-sustainable business model. This is a strong value proposition for the most extreme environments, such as conflict zones, where the network connectivity is limited, and the computational resources are scarce, as well as adaptable to specific solutions.
 
 # Use Cases and Applications
 
